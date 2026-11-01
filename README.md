@@ -1,8 +1,8 @@
 # RingExchange
 
-## Setup
+This is a small item to item trading mod with a shop system and a auction house system.
 
-For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.
+I use it to learn Java & Minecraft Modding.
 
 ## License
 
