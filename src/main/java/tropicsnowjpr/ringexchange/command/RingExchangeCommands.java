@@ -5,8 +5,14 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.network.protocol.game.ClientboundOpenSignEditorPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import tropicsnowjpr.ringexchange.gui.AuctionHouse;
 import tropicsnowjpr.ringexchange.text.Lang;
 
@@ -30,6 +36,10 @@ public class RingExchangeCommands {
         dispatcher.register(
                 Commands.literal("test")
                         .executes(ctx -> test(ctx.getSource()))
+        );
+        dispatcher.register(
+                Commands.literal("test-2")
+                        .executes(ctx -> test2(ctx.getSource()))
         );
     }
 
@@ -84,5 +94,36 @@ public class RingExchangeCommands {
             source.sendFailure(Component.literal(Lang.tr(player, "ringexchange.cmd.error", e.toString())));
         }
         return 0;
+    }
+
+    private static int test2(CommandSourceStack source) {
+        Level level = source.getLevel();
+        ServerPlayer player = requirePlayer(source);
+        if (player == null) {
+            source.sendFailure(Component.literal(Lang.tr(player, "ringexchange.cmd.player_only", "This command must be run by a player.")));
+            return 0;
+        }
+        BlockPos signPos = player.blockPosition().above(2);
+        BlockState originalState = level.getBlockState(signPos);
+        player.connection.send(
+                new ClientboundBlockUpdatePacket(
+                        signPos,
+                        Blocks.OAK_SIGN.defaultBlockState()
+                )
+        );
+        player.connection.send(
+                new ClientboundOpenSignEditorPacket(
+                        signPos,
+                        true
+                )
+        );
+
+        player.connection.send(
+                new ClientboundBlockUpdatePacket(
+                        signPos,
+                        originalState
+                )
+        );
+        return 1;
     }
 }
