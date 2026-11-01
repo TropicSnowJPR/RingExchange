@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "ringexchange",
+	"version": "${version}",
+	"name": "RingExchange",
+	"description": "Shop and Auction House Mod",
+	"authors": [
+		"TropicSnowJPR"
+	],
+	"license": "MIT",
+	"icon": "assets/ringexchange/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"server": [
+			"tropicsnowjpr.ringexchange.RingExchangeMod"
+		]
+	},
+	"mixins": [
+		"ringexchange.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

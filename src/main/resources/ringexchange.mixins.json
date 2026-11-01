@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "tropicsnowjpr.ringexchange.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"SlotPermissionMixin",
+		"AbstractContainerMenuClickMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
