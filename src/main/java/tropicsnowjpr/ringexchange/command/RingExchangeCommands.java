@@ -84,16 +84,17 @@ public class RingExchangeCommands {
 
     private static int test(CommandSourceStack source) {
         ServerPlayer player = requirePlayer(source);
+        Level level = source.getLevel();
         if (player == null) {
             source.sendFailure(Component.literal(Lang.tr(player, "ringexchange.cmd.player_only", "This command must be run by a player.")));
             return 0;
         }
         try {
-            AuctionHouse.open(player);
+            AuctionHouse.open(player, level);
         } catch (Exception e) {
             source.sendFailure(Component.literal(Lang.tr(player, "ringexchange.cmd.error", e.toString())));
         }
-        return 0;
+        return 1;
     }
 
     private static int test2(CommandSourceStack source) {
